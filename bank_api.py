@@ -4,14 +4,14 @@ This application enforces access control - every transaction must be sent with
 a valid crypto-ticket from the auth server.
 """
 
-from flask_sslify import SSLify
+# from flask_sslify import SSLify
 from flask import Flask, json, request, g
 from bank_db import BankDBConnection
 import psycopg2
 
 app = Flask(__name__)
 application = app
-sslify = SSLify(app)
+# sslify = SSLify(app)
 
 
 def get_db():
