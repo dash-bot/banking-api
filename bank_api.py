@@ -7,6 +7,7 @@ a valid crypto-ticket from the auth server.
 from flask import Flask, json, request
 
 app = Flask(__name__)
+application = app
 
 
 @app.route("/balance", methods=['GET'])
