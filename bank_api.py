@@ -5,7 +5,7 @@ a valid crypto-ticket from the auth server.
 """
 
 from flask_sslify import SSLify
-from flask import Flask, json, request
+from flask import Flask, json, request, g
 from bank_db import BankDBConnection
 import psycopg2
 
@@ -13,7 +13,12 @@ app = Flask(__name__)
 application = app
 sslify = SSLify(app)
 
-bank_db = BankDBConnection()
+
+def get_db():
+    db = getattr(g, "_dbconn", None)
+    if not db:
+        db = g._dbconn = BankDBConnection()
+    return db
 
 
 @app.route("/balance", methods=['GET'])
@@ -34,7 +39,7 @@ def balance():
     uid = request.args["uid"]
 
     # Query for given uid's bank accounts
-    results = bank_db.execute(
+    results = get_db().execute(
         """
         SELECT a.account_id, atype.account_type, a.acct_amount
         FROM accounts a INNER JOIN account_type atype ON a.account_type = atype.account_type_id WHERE a.user_id = %s;
@@ -67,10 +72,26 @@ def transfer():
     Response parameters:
         { "error" : None or error message }
     """
-    # uid = request.args["uid"]
+    account_id_send = request.args["accountid_from"]
+    account_id_receive = request.args["accountid_to"]
+    amount = request.args["transfer_amount"]
 
-    
-    return "Not implemented."
+    try:
+        transfer_sender = get_db().execute("""
+            BEGIN;
+            UPDATE accounts SET acct_amount = (acct_amount - %s) WHERE account_id = %s;
+            COMMIT;
+        """, (amount, account_id_send))
+
+        transfer_receiver = get_db().execute("""
+            BEGIN;
+            UPDATE accounts SET acct_amount = (acct_amount + %s) WHERE account_id = %s;
+            COMMIT;
+        """, (amount, account_id_receive))
+    except Exception:
+        return json.jsonify({'success': False})
+
+    return json.jsonify({'success': True})
 
 
 if __name__ == "__main__":
