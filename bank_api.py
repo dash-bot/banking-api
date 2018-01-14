@@ -46,8 +46,6 @@ def balance():
     if results is not None:
         for acct_amount in results:
             amount_list.append(acct_amount)
-    else:
-        return None
 
     # Return list of user's bank account amounts in JSON
     return json.jsonify({
@@ -69,6 +67,7 @@ def transfer():
     Response parameters:
         { "error" : None or error message }
     """
+    # uid = request.args["uid"]
 
     
     return "Not implemented."
