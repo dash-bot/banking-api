@@ -31,5 +31,19 @@ class BankDBConnection(object):
 
         return cur.fetchall()
 
+    def make_transfer(self, actid_from, actid_to, amount):
+
+        cur = self._conn.cursor()
+
+        cur.execute("""
+            UPDATE accounts SET acct_amount = (acct_amount - %s) WHERE account_id = %s;
+        """, (amount, actid_from))
+
+        cur.execute("""
+            UPDATE accounts SET acct_amount = (acct_amount + %s) WHERE account_id = %s;
+        """, (amount, actid_to))
+
+        self._conn.commit()
+
     def close(self):
         self._conn.close()

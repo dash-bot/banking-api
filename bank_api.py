@@ -66,18 +66,9 @@ def transfer():
     amount = request.args["transfer_amount"]
 
     try:
-        transfer_sender = get_db().execute("""
-            BEGIN;
-            UPDATE accounts SET acct_amount = (acct_amount - %s) WHERE account_id = %s;
-            COMMIT;
-        """, (amount, account_id_send))
-
-        transfer_receiver = get_db().execute("""
-            BEGIN;
-            UPDATE accounts SET acct_amount = (acct_amount + %s) WHERE account_id = %s;
-            COMMIT;
-        """, (amount, account_id_receive))
-    except Exception:
+        get_db().make_transfer(account_id_send, account_id_receive, amount)
+    except Exception as e:
+        print(e)
         return json.jsonify({'success': False})
 
     return json.jsonify({'success': True})
