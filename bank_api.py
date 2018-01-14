@@ -27,19 +27,20 @@ def balance():
     Response:
         {
             "balances" : {
-                (ACCOUNT_ID: ${balance}, )+
+                [Account_ID, Account_Type, Account_Amount], +
             }
         }
     """
     uid = request.args["uid"]
-    # TODO: verify uid
 
+    # Query for given uid's bank accounts
     results = bank_db.execute(
         """
-        SELECT a.account_id, u, a.acct_amount
-        FROM accounts a INNER JOIN account_type atype ON a.user_id = u.user_id WHERE a.user_id = %s AND atype.account_type LIKE %s;
+        SELECT a.account_id, atype.account_type, a.acct_amount
+        FROM accounts a INNER JOIN account_type atype ON a.account_type = atype.account_type_id WHERE a.user_id = %s;
         """,
-        (uid, ))
+        (uid))
+
     amount_list = []
 
     if results is not None:
@@ -48,10 +49,10 @@ def balance():
     else:
         return None
 
+    # Return list of user's bank account amounts in JSON
     return json.jsonify({
         "balances": {
-            1: 2000.0,
-            2: 12.0
+            amount_list
         }
     })
 
@@ -68,6 +69,8 @@ def transfer():
     Response parameters:
         { "error" : None or error message }
     """
+
+    
     return "Not implemented."
 
 
