@@ -5,13 +5,12 @@
  * Generate SQL tables for AWS PostgreSQL database to store bank info.
  */
 
-
 CREATE TABLE Users (
   user_id    SERIAL PRIMARY KEY,
   pwd        TEXT,
   first_name TEXT,
   last_name  TEXT,
-  phone_num  INT,
+  phone_num  BIGINT,
   email      TEXT
 );
 
