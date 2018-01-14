@@ -8,29 +8,29 @@
 
 
 -- Load sample user data
-INSERT INTO Users (pwd, first_name, last_name, phone_num, email)
-VALUES ('abc123', 'AJ', 'Po-Deziel', 1234567890, 'ajpd@etc.com'),
-  ('abc123', 'Charlie', 'Friend', 9876543210, 'cf@etc.com'),
-  ('abc123', 'Shae', 'Brown', 4567890123, 'sb@etc.com');
-
+INSERT INTO users (user_id, first_name, last_name, phone_num, email)
+VALUES (342450, 'AJ', 'Po-Deziel', 2506665423, 'ajpd@etc.com'),
+  (940128, 'Charlie', 'Friend', 2509024878, 'cf@etc.com'),
+  (591044, 'Paul', 'Sajna', 2506803455, 'ps@etc.com'),
+  (789243, 'Rhys', 'Lawson', 2504531237, 'rl@etc.com'),
+  (298473, 'Shae', 'Brown', 2507678889, 'sb@etc.com');
 
 -- Load available account types
-INSERT INTO AccountType (account_type_id, account_type) VALUES (1, 'Chequing'), (2, 'Savings');
-
+INSERT INTO account_type (account_type_id, account_type) VALUES (1, 'chequing'), (2, 'savings');
 
 -- Load sample account data
-INSERT INTO Accounts (user_id, account_type, acct_amount)
-VALUES (1, 1, 100.00), (1, 2, 1000.00), (2, 1, 500.00), (2, 2, 2500.00), (3, 1, 700.00), (3, 2, 1200.00);
-
+INSERT INTO accounts (account_id, user_id, account_type, acct_amount)
+VALUES (987234, 342450, 1, 1076.46),
+  (542024, 342450, 2, 1298.30),
+  (413267, 940128, 1, 1536.65),
+  (123704, 940128, 2, 922.43),
+  (219873, 591044, 1, 1388.76),
+  (618393, 591044, 2, 1205.32),
+  (120439, 789243, 1, 2013.45),
+  (122983, 789243, 2, 467.98),
+  (982734, 298473, 1, 710.03),
+  (276384, 298473, 2, 2151.87);
 
 -- Load sample available transaction types
-INSERT INTO TransactionType (transaction_type_id, transaction_type) VALUES (1, 'IntraTransfer'), (2, 'ETransfer');
-
-
-SET TIME ZONE LOCAL;
-
-
--- Load sample transaction data
-INSERT INTO Transactions (timestamp, transaction_type, sender_id, sender_account_id, receiver_id, receiver_account_id, transaction_amount)
-VALUES ('2018-01-14'::TIMESTAMP, 2, 1, 2, 3, 1, 500.00);
+INSERT INTO transaction_type (transaction_type_id, transaction_type) VALUES (1, 'account_transfer'), (2, 'etransfer');
 
