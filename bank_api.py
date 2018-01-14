@@ -35,5 +35,20 @@ def balance():
     })
 
 
+@app.route("/transfer", methods=["POST"])
+def transfer():
+    """
+    Request a transfer between bank accounts.
+
+    Request parameters:
+        accountid_from: Account ID to send from.
+        accountid_to: Account ID to send to.
+
+    Response parameters:
+        { "error" : None or error message }
+    """
+    return "Not implemented."
+
+
 if __name__ == "__main__":
     app.run()
