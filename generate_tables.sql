@@ -22,7 +22,7 @@ CREATE TABLE AccountType (
 
 CREATE TABLE Accounts (
   account_id   SERIAL PRIMARY KEY,
-  user_id      SERIAL REFERENCES Users (user_id),
+  user_id      INT REFERENCES Users (user_id),
   account_type INT, -- View AccountType to determine account type
   acct_amount  REAL,
   FOREIGN KEY (user_id) REFERENCES Users (user_id),
