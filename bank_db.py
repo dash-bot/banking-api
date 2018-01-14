@@ -18,5 +18,18 @@ class BankDBConnection(object):
     def init_query(self):
         self._cur = self._conn.cursor()
 
+    def get_account_balances(self, uid):
+        cur = self._conn.cursor()
+
+        cur.execute(
+            """
+            SELECT a.account_id, atype.account_type, a.acct_amount
+            FROM accounts a INNER JOIN account_type atype ON a.account_type = atype.account_type_id 
+            WHERE a.user_id = %s;
+            """,
+            (uid,))
+
+        return cur.fetchall()
+
     def close(self):
         self._conn.close()

@@ -39,24 +39,13 @@ def balance():
     uid = request.args["uid"]
 
     # Query for given uid's bank accounts
-    results = get_db().execute(
-        """
-        SELECT a.account_id, atype.account_type, a.acct_amount
-        FROM accounts a INNER JOIN account_type atype ON a.account_type = atype.account_type_id WHERE a.user_id = %s;
-        """,
-        (uid))
-
-    amount_list = []
-
-    if results is not None:
-        for acct_amount in results:
-            amount_list.append(acct_amount)
+    amount_list = get_db().get_account_balances(uid)
 
     # Return list of user's bank account amounts in JSON
     return json.jsonify({
-        "balances": {
-            amount_list
-        }
+        "balances": [
+            {"id": ele[0], "name": ele[1], "balance": ele[2]} for ele in amount_list
+        ]
     })
 
 
