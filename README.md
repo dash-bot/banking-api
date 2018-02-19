@@ -5,4 +5,6 @@
 
 
 ## What is this API used for?
-This is one of three microservices that make up Dash, and provides it with a basic bank containing data with customers and sample transactions. The service is used, for example, with [conversation-server](https://github.com/dash-bot/conversation-server) for use with Microsoft Cognitive Services' LUIS when customers query it for information regarding their accounts.
+This is one of three microservices that make up Dash, and provides it with a basic bank structure connected to a **PostgreSQL database on AWS RDS**. It also contains sample data of customers and sample transactions so that it can be queried against.
+
+The service is then used, for example, with [conversation-server](https://github.com/dash-bot/conversation-server) for use with **Microsoft Cognitive Services' LUIS** when customers query it for information regarding their accounts.
