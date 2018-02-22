@@ -1,0 +1,10 @@
+{
+    "production": {
+        "aws_region": "us-west-2",
+        "profile_name": "default",
+        "project_name": "banking-api",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-t6yt501nt",
+        "app_function": "bank_api.app"
+    }
+}
